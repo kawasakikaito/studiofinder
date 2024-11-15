@@ -1,4 +1,4 @@
-from django.views.generic import TemplateView
+from django.shortcuts import render
 
-class StudioView(TemplateView):
-    template_name = 'studio.html'
+def index(request):
+    return render(request, 'studio.html')

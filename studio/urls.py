@@ -1,6 +1,6 @@
 from django.urls import path
-from .views import StudioView
+from .views import index
 
 urlpatterns = [
-    path('', StudioView.as_view(), name='studio'),  # 空のパスでstudio_viewを指定
+    path('', index, name='studio'),  # 空のパスでindexを指定
 ]
