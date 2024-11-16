@@ -1,35 +1,72 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React, { useState } from "react";
 
-function App() {
-  const [count, setCount] = useState(0)
-
-  return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+interface SearchResult {
+  id: number;
+  name: string;
+  address: string;
 }
 
-export default App
+const App: React.FC = () => {
+  const [searchResults, setSearchResults] = useState<SearchResult[]>([]);
+  const [time, setTime] = useState<string>("");
+  const [location, setLocation] = useState<string>("");
+
+  const handleSearch = () => {
+    // ダミーデータとして検索結果を設定
+    setSearchResults([
+      { id: 1, name: "スタジオA", address: "大阪市中央区" },
+      { id: 2, name: "スタジオB", address: "大阪市北区" },
+    ]);
+  };
+
+  return (
+    <div style={{ fontFamily: "Arial, sans-serif", padding: "20px" }}>
+      <header style={{ textAlign: "center", marginBottom: "20px" }}>
+        <h1>スタジオナビ</h1>
+        <p>スタジオの空き状況を確認しよう！</p>
+      </header>
+
+      <section style={{ marginBottom: "30px" }}>
+        <label>
+          時間:
+          <input
+            type="time"
+            value={time}
+            onChange={(e) => setTime(e.target.value)}
+            style={{ marginLeft: "10px", marginRight: "20px" }}
+          />
+        </label>
+        <label>
+          場所:
+          <input
+            type="text"
+            placeholder="例: 大阪"
+            value={location}
+            onChange={(e) => setLocation(e.target.value)}
+            style={{ marginLeft: "10px" }}
+          />
+        </label>
+        <button onClick={handleSearch} style={{ marginLeft: "20px" }}>
+          検索
+        </button>
+      </section>
+
+      <section>
+        <h2>検索結果</h2>
+        {searchResults.length > 0 ? (
+          <ul>
+            {searchResults.map((result, index) => (
+              <li key={result.id}>
+                <strong>{result.name}</strong> - {result.address} - {index}
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p>検索結果はありません。</p>
+        )}
+      </section>
+    </div>
+  );
+};
+
+export default App;
